@@ -10,6 +10,7 @@ class ApiV1::EventsController < ApiController
         summary = Chronic.parse(change_chinese_day(s[0,2]) + " #{s[-11,2]}").strftime('%H%p').downcase + "-" + Chronic.parse(change_chinese_day(s[0,2]) + " #{s[-5,2]}").strftime('%H%p').downcase + " 值班助教"
 
         result = Event.joins(:week_table).where(start_time: Time.zone.parse(start_time), end_time: Time.zone.parse(end_time), summary: summary)
+
         if result.empty?
           WeekTable.create(
             events_attributes: [
@@ -17,7 +18,9 @@ class ApiV1::EventsController < ApiController
             ]
           )
         else
-          result.first.update(start_time: start_time, end_time: end_time, summary: summary, all_slacks: result.first.all_slacks << ",#{slack_id}")
+          unless result.first.all_slacks.include?(slack_id)
+            result.first.all_slacks += ", #{slack_id}"
+          end
         end
       end
       render :json => { :message => "We got form data" }, :status => 200
