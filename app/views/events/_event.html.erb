@@ -1,4 +1,4 @@
-<% @events.each do |event| %>
+<% @events.order(start_time: :asc).each do |event| %>
 <tr>
   <td><%= link_to event.start_time.strftime('%m/%d %H %A'), edit_event_path(event) %></td>
   <td><%= highlight event.all_slacks, params[:slack]%>
