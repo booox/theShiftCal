@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
   devise_for :users
+
+  scope :path => '/api/v1/', :module => "api_v1", :as => 'v1', :defaults => { :format => :json } do
+    resources :events
+  end
+
   resources :events do
     collection do
       get :calendar
@@ -7,10 +12,8 @@ Rails.application.routes.draw do
       get :my_ics_export
     end
   end
+
   resources :week_tables
 
-
-
   root 'events#index'
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
