@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       get :calendar
       get :ics_export
       get :my_ics_export
+      post :import
     end
   end
 

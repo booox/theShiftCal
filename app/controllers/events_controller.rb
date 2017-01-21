@@ -91,6 +91,11 @@ class EventsController < ApplicationController
     redirect_to events_path
   end
 
+  def import
+    Event.import(params[:file])
+    redirect_to root_url, notice: "Events imported."
+  end
+
   private
 
   def event_parmas

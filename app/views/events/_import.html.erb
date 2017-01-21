@@ -1,0 +1,9 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">上傳助教值班表(.xls)</div>
+  <div class="panel-body">
+    <%= form_tag import_events_path, multipart: true do |f|%>
+      <%= file_field_tag :file %>
+      <%= submit_tag "Import", class: 'btn btn-success form-control' %>
+    <% end %>
+  </div>
+</div>
