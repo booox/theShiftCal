@@ -4,21 +4,30 @@ class Jinshuju
   attr_accessor :slack_id
   attr_reader :shifts
 
-  def initialize hash
-    @slack_id = hash['entry']['field_25']
-    @schedule_ary = hash['entry']['field_18']
+  def initialize(slack, schedules)
+    @slack_id = slack
+    @schedules = schedules
     @shifts = init_shifts
   end
 
   def init_shifts
     result = []
-    @schedule_ary.each do |s|
-      start_time = Chronic.parse(change_chinese_day(s[0,2]) + " #{s[-11,2]}").strftime('%Y-%m-%d %H:%M:%S')
-      end_time = Chronic.parse(change_chinese_day(s[0,2]) + " #{s[-5,2]}").strftime('%Y-%m-%d %H:%M:%S')
-      summary = Chronic.parse(change_chinese_day(s[0,2]) + " #{s[-11,2]}").strftime('%H%p').downcase + "-" + Chronic.parse(change_chinese_day(s[0,2]) + " #{s[-5,2]}").strftime('%H%p').downcase + " 值班助教"
-      result << {:start_time => start_time, :end_time => end_time, :summary => summary}
+    @schedules.each do |schedule|
+      result << {:start_time => t_start_time(schedule), :end_time => t_end_time(schedule), :summary => t_summary(schedule)}
     end
     result
+  end
+
+  def t_start_time(schedule)
+    Chronic.parse(change_chinese_day(schedule[0,2]) + " #{schedule[-11,2]}").strftime('%Y-%m-%d %H:%M:%S')
+  end
+
+  def t_end_time(schedule)
+    Chronic.parse(change_chinese_day(schedule[0,2]) + " #{schedule[-5,2]}").strftime('%Y-%m-%d %H:%M:%S')
+  end
+
+  def t_summary(schedule)
+    Chronic.parse(change_chinese_day(schedule[0,2]) + " #{schedule[-11,2]}").strftime('%H%p').downcase + "-" + Chronic.parse(change_chinese_day(schedule[0,2]) + " #{schedule[-5,2]}").strftime('%H%p').downcase + " 值班助教"
   end
 
   def change_chinese_day(text)

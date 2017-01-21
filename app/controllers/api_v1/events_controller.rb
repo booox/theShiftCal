@@ -3,21 +3,13 @@ class ApiV1::EventsController < ApiController
 
   def create
     if request.post?
-      data = Jinshuju.new(params)
+      slack = params['entry']['field_25']
+      schedules = params['entry']['field_18']
 
-      data.shifts.each do |shift|
-        result = Event.find_by(start_time: Time.zone.parse(shift[:start_time]), end_time: Time.zone.parse(shift[:end_time]), summary: shift[:summary])
+      data = Jinshuju.new(slack, schedules)
 
-        if result.blank?
-          WeekTable.create(
-            events_attributes: [
-              { start_time: shift[:start_time], end_time: shift[:end_time], summary: shift[:summary], all_slacks: data.slack_id },
-            ]
-          )
-        else
-          result.all_slacks += ", #{data.slack_id}" unless result.all_slacks.split(",").include?(data.slack_id)
-        end
-      end
+      Event.import_shifts(data)
+
       render :json => { :message => "We got form data" }, :status => 200
     end
   end
