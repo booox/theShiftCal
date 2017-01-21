@@ -35,6 +35,7 @@ gem 'pry'
 gem 'tzinfo'
 gem 'chronic'
 gem 'bullet', group: :development
+gem 'roo'
 
 
 
