@@ -5,7 +5,7 @@ class EventsController < ApplicationController
   def index
 
     if params[:slack]
-      @events = Event.booked_with(params[:slack])
+      @events = Event.booked_with(params[:slack]).last_week
     else
       @events = Event.last_week
     end
