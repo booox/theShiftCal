@@ -12,7 +12,7 @@ class EventsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json  { render :json => custom_json_for(@events) }
+      format.json  { render :json => custom_json_for(Event.all) }
       format.ics do
         cal = Icalendar::Calendar.new
         @events.each do |event|
