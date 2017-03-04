@@ -3,7 +3,9 @@
 <tr>
   <td>#</td>
   <%=  @week_tables.each do |f| %>
-  <td><%= f.id%></td>
+  <td><%= f.integer %></td>
+  <td><%= f.created_at %></td>
+
   <td>
     <% if current_user %>
 

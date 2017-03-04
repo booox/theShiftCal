@@ -27,7 +27,7 @@ class EventsController < ApplicationController
 
   def ics_export
 
-    @events = Event.all
+    @events = Event.all.last_week
     respond_to do |format|
       format.html
       format.ics do

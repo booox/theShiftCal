@@ -41,6 +41,7 @@ class WeekTablesController < ApplicationController
     end
 
   end
+  
   def destroy
     @week_table = WeekTable.find(params[:id])
     @week_table.destroy!
