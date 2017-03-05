@@ -1,35 +1,68 @@
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        $('#html_show').click(function(){
+            var target = '<%= events_path(format: :html) %>';
+            $('#SearchForm').attr('action', target);
+            $('#SearchForm').submit();
+        });
+
+        $('#ics_export').click(function(){
+            var target = '<%= events_path(format: :ics) %>';
+            $('#SearchForm').attr('action', target);
+            $('#SearchForm').submit();
+        });
+
+    });
+</script>
+
+
+
 <div class="col-md-12">
   <div class="container">
-    <div class="search">
-      <%= form_tag(events_path, method: :get) do %>
-      <%= text_field_tag :slack, params[:slack], required: true, class:"form-control input-lg",placeholder:"Enter the slack id", size:80 %>
+    <br><br><br>
+    <div class="row search">
+      <%= form_tag '#', method: :get, id: 'SearchForm' do %>
+      <div class="col-md-9">
+      <%= text_field_tag :slack, params[:slack], required: true, class:"form-control input",placeholder:"Enter the slack id" %>
+      </div>
+      <div class="col-md-3">
+        <%= submit_tag "Search",id: 'html_show', class:"btn btn-info" %>
+        <%= submit_tag "Calendar Export",id: 'ics_export',class:"btn btn-primary" %>
+      </div>
       <br>
-      <%= select_tag :format, options_for_select([["Just check my shifts on page", "html"], ["Export all my shifts of this week into my calendar", "ics"]], "Export all your events of this week"), class:"form-control " %>
-      <br>
-      <%= submit_tag "check my shifts", class:"form-control btn btn-info" %>
       <% end %>
     </div>
     <br>
+
+
     <% if current_user %>
-      <div class="col-md-3">
+     <hr display:"inline-block"/>
+    <h2 class='admin-panel'>Admin panel</h2>
+    <div class="row">
+
+      <div class="col-md-6">
+        <div class="row">
+         <%= link_to "Downand weekly Shifts", {controller:'events', action: :ics_export, format: :ics}, class: 'btn btn-primary' %>
+         <%= link_to "Import into Google Calendar and post the events to slack", "https://calendar.google.com", class:'btn btn-danger' %>
+        </div>
+      </div>
+      <div class="col-md-6">
         <%= render 'import' %>
       </div>
-      <div class="col-md-9">
-        <%= link_to "Export  all the events", {controller:'events', action: :ics_export, format: :ics}, class: 'btn btn-primary' %>
-        <%= link_to "Import it into the Google Calendar and post the events to slack", "https://calendar.google.com", class:'btn btn-success' %>
-        <%= link_to("Set up a new weekly shift", new_week_table_path, class:"btn btn-danger") %>
-      </div>
+        <!-- <%= link_to("Set up a new weekly shift", new_week_table_path, class:"btn btn-danger") %> -->
+    </div>
     <% end %>
   </div>
   <table class="table table-bordered table-responsive table-hover">
     <thead>
       <hr>
       <tr>
+        <td>Date</td>
         <td>Shift</td>
         <td>TAs</td>
-        <td>Calendar Download Links</td>
         <% if current_user %>
-        <td>delete</td>
+        <td>Delete</td>
         <% end %>
       </tr>
     </thead>
