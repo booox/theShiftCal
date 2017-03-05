@@ -1,7 +1,7 @@
 <% @events.order(start_time: :asc).each do |event| %>
 <tr>
-  <td><%= link_to event.start_time.strftime('%m/%d %H %A'), edit_event_path(event) %></td>
-  <td><%= link_to event.summary, controller:'events', action: :show, format: :ics, :id => event.id %>
+  <td><%= event.start_time.strftime('%m/%d %H %A')%></td>
+  <td><%= render_shift(event)%></td>
   <td><%= highlight event.all_slacks, params[:slack]%></td>
       <% if current_user %>
       <td><%= link_to "Delete", event_path(event), method: :delete, :data=>{ :confirm =>"Are you sure?"} %></td>
