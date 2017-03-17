@@ -36,7 +36,7 @@
     <br>
 
 
-    <% if current_user %>
+    <% if current_user && current_user.admin? %>
      <hr display:"inline-block"/>
     <h2 class='admin-panel'>Admin panel</h2>
     <div class="row">
@@ -44,13 +44,14 @@
       <div class="col-md-6">
         <div class="row">
          <%= link_to "Downand weekly Shifts", {controller:'events', action: :ics_export, format: :ics}, class: 'btn btn-primary' %>
-         <%= link_to "Import into Google Calendar and post the events to slack", "https://calendar.google.com", class:'btn btn-danger' %>
+         <%= link_to "Import into Google Calendar and post the events to slack", "https://calendar.google.com", class:'btn btn-info' %>
+         <%= link_to 'reset events', {controller:'events',action: :destroy_all}, method: :delete,class:'btn btn-danger' %>
         </div>
       </div>
       <div class="col-md-6">
         <%= render 'import' %>
       </div>
-         
+
     </div>
     <% end %>
   </div>

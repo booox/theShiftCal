@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       get :ics_export
       get :my_ics_export
       post :import
+      delete :destroy_all
     end
   end
 

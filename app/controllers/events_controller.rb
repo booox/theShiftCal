@@ -24,6 +24,11 @@ class EventsController < ApplicationController
     end
 
   end
+  def destroy_all
+    @events = Event.all.this_week
+    @events.destroy_all
+    redirect_to events_path
+  end
 
   def ics_export
 
