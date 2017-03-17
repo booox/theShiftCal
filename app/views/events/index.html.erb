@@ -24,11 +24,11 @@
     <div class="row search">
       <%= form_tag '#', method: :get, id: 'SearchForm' do %>
       <div class="col-md-9">
-      <%= text_field_tag :slack, params[:slack], required: true, class:"form-control input",placeholder:"Enter the slack id" %>
+      <%= text_field_tag :slack, params[:slack], required: true, class:"form-control input",placeholder:"Enter your slack id" %>
       </div>
       <div class="col-md-3">
         <%= submit_tag "Search",id: 'html_show', class:"btn btn-info" %>
-        <%= submit_tag "Calendar Export",id: 'ics_export',class:"btn btn-primary" %>
+        <%= submit_tag "Calendar Export（in safari)",id: 'ics_export',class:"btn btn-primary" %>
       </div>
       <br>
       <% end %>
