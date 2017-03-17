@@ -45,7 +45,7 @@
         <div class="row">
          <%= link_to "Downand weekly Shifts", {controller:'events', action: :ics_export, format: :ics}, class: 'btn btn-primary' %>
          <%= link_to "Import into Google Calendar and post the events to slack", "https://calendar.google.com", class:'btn btn-info' %>
-         <%= link_to 'reset events', {controller:'events',action: :destroy_all}, method: :delete,class:'btn btn-danger' %>
+         <%= link_to 'reset events this week', {controller:'events',action: :destroy_all}, method: :delete,class:'btn btn-danger' %>
         </div>
       </div>
       <div class="col-md-6">
