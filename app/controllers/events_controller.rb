@@ -5,9 +5,9 @@ class EventsController < ApplicationController
   def index
 
     if params[:slack]
-      @events = Event.booked_with(params[:slack]).last_week
+      @events = Event.booked_with(params[:slack]).this_week
     else
-      @events = Event.last_week
+      @events = Event.this_week
     end
 
     respond_to do |format|
@@ -27,7 +27,7 @@ class EventsController < ApplicationController
 
   def ics_export
 
-    @events = Event.all.last_week
+    @events = Event.all.this_week
     respond_to do |format|
       format.html
       format.ics do
