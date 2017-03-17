@@ -7,7 +7,7 @@ class Event < ApplicationRecord
   has_many :slacks, through: :shifts
 
   scope :booked_with, ->(name) { Slack.find_by("name = ?", name).events }
-  scope :last_week, -> { where(start_time: Date.current..(Date.current + 7.days)) }
+  scope :last_week, -> { where(start_time: Date.current..(Date.current + 8.days)) }
 
   def to_ics
 
