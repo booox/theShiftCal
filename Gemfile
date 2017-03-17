@@ -35,7 +35,8 @@ gem 'pry'
 gem 'tzinfo'
 gem 'chronic'
 gem 'bullet', group: :development
-gem 'roo'
+gem 'roo-xls'
+gem "roo", "~> 2.7.0"
 
 
 
